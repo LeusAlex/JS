@@ -1,0 +1,29 @@
+document.querySelectorAll('.rotator').forEach(rotator => {
+  const cases = rotator.querySelectorAll('.rotator__case');
+  let currentIndex = 0;
+
+  function changeCase() {
+    // Скрываем текущий элемент
+    cases[currentIndex].classList.remove('rotator__case_active');
+
+    // Переходим к следующему элементу
+    currentIndex = (currentIndex + 1) % cases.length;
+
+    // Получаем скорость и цвет для нового элемента
+    const nextCase = cases[currentIndex];
+    const speed = parseInt(nextCase.dataset.speed) || 1000; // Значение по умолчанию 1000 мс
+    const color = nextCase.dataset.color || 'black'; // Значение по умолчанию черный
+
+    // Устанавливаем цвет текста
+    nextCase.style.color = color;
+
+    // Показываем новый элемент
+    nextCase.classList.add('rotator__case_active');
+
+    // Запускаем следующий переход с учетом заданной скорости
+    setTimeout(changeCase, speed);
+  }
+
+  // Начинаем с первого элемента
+  changeCase();
+});
