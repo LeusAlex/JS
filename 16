@@ -1,0 +1,257 @@
+1. package.json
+{
+  "name": "RPG-game",
+  "version": "1.0.0",
+  "description": "Игра в жанре RPG, где игроки могут выбирать персонажей и сражаться.",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "start": "webpack serve --open",
+    "lint": "eslint ."
+  },
+  "keywords": ["RPG", "game", "javascript"],
+  "author": "Ваше имя или псевдоним",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^5.0.0",
+    "webpack-cli": "^4.0.0",
+    "webpack-dev-server": "^3.0.0",
+    "html-webpack-plugin": "^5.0.0",
+    "mini-css-extract-plugin": "^2.0.0",
+    "css-loader": "^6.0.0",
+    "eslint": "^7.0.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.22.0"
+  }
+}
+2. webpack.config.js
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+module.exports = {
+  entry: './src/js/index.js',
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+    clean: true,
+  },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+      },
+      {
+        test: /\.m?js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+        },
+      },
+    ],
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+    }),
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+    }),
+  ],
+  devServer: {
+    static: './dist',
+  },
+};
+3. src/index.html
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPG Game</title>
+</head>
+<body>
+    <h1>Добро пожаловать в RPG Game!</h1>
+</body>
+</html>
+
+4. src/css/style.css
+body {
+    color: #999;
+}
+5. src/js/game.js
+// Здесь будет логика игры
+export function play() {
+    console.log("Игра началась!");
+}
+6. src/js/index.js
+import { play } from './game';
+
+play();
+
+7. src/js/characters/Player.js
+import { Knife } from '../weapons/Knife';
+
+class Player {
+    constructor(name) {
+        this.name = name;
+        this.health = 100;
+        this.weapon = new Knife(); // Начальное оружие
+    }
+}
+
+export default Player;
+8. src/js/characters/Archer.js
+import Player from './Player';
+import { Bow } from '../weapons/Bow';
+
+class Archer extends Player {
+    constructor(name) {
+        super(name);
+        this.weapon = new Bow(); // Начальное оружие
+    }
+}
+
+export default Archer;
+9. src/js/characters/Warrior.js
+import Player from './Player';
+import { Sword } from '../weapons/Sword';
+
+class Warrior extends Player {
+    constructor(name) {
+        super(name);
+        this.weapon = new Sword(); // Начальное оружие
+    }
+}
+
+export default Warrior;
+10. src/js/characters/Mage.js
+import Player from './Player';
+import { Staff } from '../weapons/Staff';
+
+class Mage extends Player {
+    constructor(name) {
+        super(name);
+        this.weapon = new Staff(); // Начальное оружие
+    }
+}
+
+export default Mage;
+11. src/js/characters/Dwart.js
+import Warrior from './Warrior';
+import { Axe } from '../weapons/Axe';
+
+class Dwart extends Warrior {
+    constructor(name) {
+        super(name);
+        this.weapon = new Axe(); // Начальное оружие
+    }
+}
+
+export default Dwart;
+12. src/js/characters/Crossbowman.js
+import Archer from './Archer';
+import { LongBow } from '../weapons/LongBow';
+
+class Crossbowman extends Archer {
+    constructor(name) {
+        super(name);
+        this.weapon = new LongBow(); // Начальное оружие
+    }
+}
+
+export default Crossbowman;
+13. src/js/characters/Demourge.js
+import Mage from './Mage';
+import { StormStaff } from '../weapons/StormStaff';
+
+class Demourge extends Mage {
+    constructor(name) {
+        super(name);
+        this.weapon = new StormStaff(); // Начальное оружие
+    }
+}
+
+export default Demourge;
+14. src/js/weapons/Weapon.js
+class Weapon {
+    constructor(name) {
+        this.name = name;
+    }
+}
+
+export default Weapon;
+15. src/js/weapons/Knife.js
+import Weapon from './Weapon';
+
+class Knife extends Weapon {
+    constructor() {
+        super('Knife');
+    }
+}
+
+export { Knife };
+16. src/js/weapons/Sword.js
+import Weapon from './Weapon';
+
+class Sword extends Weapon {
+    constructor() {
+        super('Sword');
+    }
+}
+
+export { Sword };
+17. src/js/weapons/Axe.js
+import { Sword } from './Sword';
+
+class Axe extends Sword {
+    constructor() {
+        super();
+        this.name = 'Axe';
+    }
+}
+
+export { Axe };
+18. src/js/weapons/Bow.js
+import Weapon from './Weapon';
+
+class Bow extends Weapon {
+    constructor() {
+        super('Bow');
+    }
+}
+
+export { Bow };
+19. src/js/weapons/LongBow.js
+import { Bow } from './Bow';
+
+class LongBow extends Bow {
+    constructor() {
+        super();
+        this.name = 'Long Bow';
+    }
+}
+
+export { LongBow };
+20. src/js/weapons/Staff.js
+import Weapon from './Weapon';
+
+class Staff extends Weapon {
+    constructor() {
+        super('Staff');
+    }
+}
+
+export { Staff };
+21. src/js/weapons/StormStaff.js
+import { Staff } from './Staff';
+
+class StormStaff extends Staff {
+    constructor() {
+        super();
+        this.name = 'Storm Staff';
+    }
+}
+
+export { StormStaff };
