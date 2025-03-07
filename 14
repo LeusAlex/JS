@@ -1,0 +1,59 @@
+{
+  "name": "RPG-game",
+  "version": "1.0.0",
+  "description": "Игра в жанре RPG, где игроки могут выбирать персонажей и сражаться.",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src -d dist",
+    "lint": "eslint ."
+  },
+  "keywords": ["RPG", "game", "javascript"],
+  "author": "Ваше имя или псевдоним",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ваш_пользователь/RPG-game.git"
+  }
+}
+
+
+
+node_modules
+dist
+
+
+
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "useBuiltIns": "usage",
+        "corejs": 3
+      }
+    ]
+  ]
+}
+
+
+const characters = [
+  { name: 'мечник', health: 10 },
+  { name: 'маг', health: 100 },
+  { name: 'маг', health: 0 },
+  { name: 'лучник', health: 0 },
+];
+
+const alive = characters.filter(item => item.health > 0);
+console.log(alive);
+
+
+import js from "@eslint/js";
+
+export default [
+  js.configs.recommended,
+  {
+    plugins: {
+      extends: ["airbnb-base/legacy"],
+    },
+  },
+];
